@@ -1,5 +1,3 @@
-from neurosnap.conformers import generate
-
 """
 Author:
     - Danial Gharaie Amirabadi
@@ -7,10 +5,13 @@ Usage
 -----
 python conf_gen.py --excel my_molecules.xlsx --num-confs 1500
 """
-import os
+
 import argparse
+import os
 from pathlib import Path
+
 import pandas as pd
+from neurosnap.conformers import generate
 from tqdm import tqdm
 
 
