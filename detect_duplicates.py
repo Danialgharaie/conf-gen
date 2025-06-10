@@ -51,16 +51,22 @@ def main(args):
             canonical_map[canon] = (mol_id, smi)
 
     # 3) Report duplicates ------------------------------------------------
-    print(f"\n🔍 Found {len(duplicates)} duplicate canonical SMILES entries.\n")
-
     if duplicates:
-        print("🧬 Duplicate entries:")
+        print(f"\n🔍 Found {len(duplicates)} duplicate canonical SMILES entries.")
+        duplicate_data = []
         for canon, dups in duplicates.items():
             all_ids = [canonical_map[canon][0]] + [x[0] for x in dups]
-            print(f"  Canonical SMILES: {canon}")
-            print(f"    Molecule IDs: {', '.join(all_ids)}")
+            duplicate_data.append({
+                "Canonical SMILES": canon,
+                "Molecule IDs": ", ".join(all_ids)
+            })
+        
+        df_duplicates = pd.DataFrame(duplicate_data)
+        output_csv_path = "duplicates.csv" # Or make this an argument
+        df_duplicates.to_csv(output_csv_path, index=False)
+        print(f"🧬 Duplicate entries saved to {output_csv_path}")
     else:
-        print("✅ No duplicate SMILES found.")
+        print("\n✅ No duplicate SMILES found.")
 
 
 if __name__ == "__main__":
